@@ -51,6 +51,7 @@ box-shadow: 0 0 8px #1DB954;
 #conteudo {
 margin-left: 220px;
 padding: 20px;
+padding-bottom: 200px;
 }
 
 /* HEADER */
@@ -70,6 +71,16 @@ border-radius: 10px;
 padding: 10px;
 border-bottom: 1px solid #333;
 cursor: pointer;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.song img {
+width: 40px;
+height: 40px;
+object-fit: cover;
+border-radius: 6px;
 }
 
 .song:hover {
@@ -256,11 +267,18 @@ width: 100px;
 
 <br/>
 
-<div class="song" onclick="playSong(0)">1. Sweater Weather</div>
-<div class="song" onclick="playSong(1)">2. Reflections</div>
-<div class="song" onclick="playSong(2)">3. Softcore</div>
-<div class="song" onclick="playSong(3)">4. Daddy Issues</div>
-<div class="song" onclick="playSong(4)">5. You Get Me So High</div>
+<div id="song-list">
+<div class="song" onclick="playSong(0)"><img src="Audios/The Neighbourhood/Sweater Weather.jpg">Sweater Weather</div>
+<div class="song" onclick="playSong(1)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg">Reflections</div>
+<div class="song" onclick="playSong(2)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg">Softcore</div>
+<div class="song" onclick="playSong(3)"><img src="Audios/The Neighbourhood/Daddy Issues.jpg">Daddy Issues</div>
+<div class="song" onclick="playSong(4)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg">You Get Me So High</div>
+<div class="song" onclick="playSong(5)"><img src="Audios/The Neighbourhood/A Little Death.jpg">A Little Death</div>
+<div class="song" onclick="playSong(6)"><img src="Audios/The Neighbourhood/Afraid.jpg">Afraid</div>
+<div class="song" onclick="playSong(7)"><img src="Audios/The Neighbourhood/Cry Baby.jpg">Cry Baby</div>
+<div class="song" onclick="playSong(8)"><img src="Audios/The Neighbourhood/Nervous.jpg">Nervous</div>
+<div class="song" onclick="playSong(9)"><img src="Audios/The Neighbourhood/The Beach.jpg">The Beach</div>
+</div>
 
 </div>
 
@@ -317,7 +335,12 @@ let playlist = [
 "Audios/The Neighbourhood/reflections.mp3",
 "Audios/The Neighbourhood/softcore.mp3",
 "Audios/The Neighbourhood/daddy issues.mp3",
-"Audios/The Neighbourhood/you get me so high.mp3"
+"Audios/The Neighbourhood/you get me so high.mp3",
+"Audios/The Neighbourhood/A Little Death.mp3",
+"Audios/The Neighbourhood/Afraid.mp3",
+"Audios/The Neighbourhood/Cry Baby.mp3",
+"Audios/The Neighbourhood/Nervous.mp3",
+"Audios/The Neighbourhood/The Beach.mp3"
 ];
 
 let names = [
@@ -325,7 +348,12 @@ let names = [
 "Reflections",
 "Softcore",
 "Daddy Issues",
-"You Get Me So High"
+"You Get Me So High",
+"A Little Death",
+"Afraid",
+"Cry Baby",
+"Nervous",
+"The Beach"
 ];
 
 let currentSong = -1;
