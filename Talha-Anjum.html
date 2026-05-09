@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Talha Anjum</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+background-color: #121212;
+color: white;
+font-family: Arial;
+margin: 0;
+scroll-behavior: smooth;
+}
+
+/* MENU */
+#menu {
+width: 200px;
+height: 100vh;
+float: left;
+background-color: black;
+padding-left: 15px;
+padding-top: 10px;
+}
+
+/* LOGO */
+#logo {
+color: #1DB954;
+text-decoration: none;
+}
+
+/* SEARCH */
+#search {
+width: 170px;
+height: 32px;
+background-color: #181818;
+border: 1px solid #333;
+color: white;
+padding-left: 12px;
+border-radius: 20px;
+outline: none;
+margin-top: 10px;
+transition: 0.3s;
+}
+
+#search:focus {
+border: 1px solid #1DB954;
+box-shadow: 0 0 8px #1DB954;
+}
+
+/* CONTENT */
+#conteudo {
+margin-left: 220px;
+padding: 20px;
+padding-bottom: 200px;
+}
+
+/* HEADER */
+#album-header {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+#album-header img {
+width: 150px;
+border-radius: 10px;
+}
+
+/* SONGS */
+.song {
+padding: 10px;
+border-bottom: 1px solid #333;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.song:hover {
+background-color: #282828;
+}
+
+.song-icon {
+width: 40px;
+height: 40px;
+object-fit: cover;
+border-radius: 6px;
+}
+
+.active {
+background-color: #1DB954;
+color: black;
+}
+
+/* PLAYER */
+#player {
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+background: #181818;
+padding: 15px;
+text-align: center;
+}
+
+/* SPOTIFY CONTROLS */
+.control-btn {
+background: none;
+border: none;
+cursor: pointer;
+margin: 0 6px;
+opacity: 0.8;
+transition: 0.2s;
+}
+
+.control-btn:hover {
+opacity: 1;
+transform: scale(1.1);
+}
+
+.control-btn svg {
+width: 20px;
+height: 20px;
+fill: white;
+}
+
+#loopBtn svg {
+fill: #888;
+}
+
+#loopBtn.active svg {
+fill: #1DB954;
+}
+
+#playBtn {
+background: #1DB954;
+border-radius: 50%;
+width: 40px;
+height: 40px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: none;
+cursor: pointer;
+}
+
+#playBtn svg {
+fill: black;
+width: 18px;
+height: 18px;
+}
+
+/* MUTE */
+#muteBtn {
+background: none;
+border: none;
+color: white;
+font-size: 18px;
+cursor: pointer;
+}
+
+/* PROGRESS */
+#progress {
+appearance: none;
+width: 350px;
+height: 8px;
+border-radius: 10px;
+background: #333;
+cursor: pointer;
+}
+
+#volume {
+appearance: none;
+width: 150px;
+height: 6px;
+border-radius: 10px;
+background: #333;
+cursor: pointer;
+}
+
+#progress::-webkit-slider-thumb,
+#volume::-webkit-slider-thumb {
+appearance: none;
+width: 12px;
+height: 12px;
+border-radius: 50%;
+background: white;
+cursor: pointer;
+}
+
+/* CONTROLS */
+.controls {
+position: absolute;
+right: 120px;
+bottom: 20px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+#time {
+margin-left: 10px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+#menu {
+width: 100%;
+height: auto;
+float: none;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px;
+}
+
+#conteudo {
+margin-left: 0;
+padding: 15px;
+padding-bottom: 200px;
+}
+
+#album-header {
+flex-direction: column;
+align-items: flex-start;
+}
+
+#album-header img {
+width: 120px;
+}
+
+#progress {
+width: 90%;
+}
+
+.controls {
+position: static;
+margin-top: 10px;
+justify-content: center;
+}
+
+#volume {
+width: 100px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="menu">
+<a id="logo" href="index.html"><h2>Spotify</h2></a>
+<input type="text" id="search" placeholder="Search...">
+</div>
+
+<div id="conteudo">
+
+<div id="album-header">
+<img src="Images/talha anjum.jpg">
+<div>
+<h1>Talha Anjum</h1>
+<p>Artist • Playlist</p>
+</div>
+</div>
+
+<br/>
+
+<div class="song" onclick="playSong(0)"><img src="Audios/Talha Anjum/Afsanay.jpg" class="song-icon">Afsanay</div>
+<div class="song" onclick="playSong(1)"><img src="Audios/Talha Anjum/Agency.jpg" class="song-icon">Agency</div>
+<div class="song" onclick="playSong(2)"><img src="Audios/Talha Anjum/Talha Anjum.jpg" class="song-icon">Departure Lane</div>
+<div class="song" onclick="playSong(3)"><img src="Audios/Talha Anjum/Talha Anjum 2.jpg" class="song-icon">Downers At Dusk</div>
+<div class="song" onclick="playSong(4)"><img src="Audios/Talha Anjum/Talha Anjum 2.jpg" class="song-icon">Happy Hour</div>
+<div class="song" onclick="playSong(5)"><img src="Audios/Talha Anjum/Talha Anjum.jpg" class="song-icon">Heartbreak Kid</div>
+<div class="song" onclick="playSong(6)"><img src="Audios/Talha Anjum/Kaun Talha.jpg" class="song-icon">Kaun Talha</div>
+<div class="song" onclick="playSong(7)"><img src="Audios/Talha Anjum/Me  And  You.jpg" class="song-icon">Me And You</div>
+<div class="song" onclick="playSong(8)"><img src="Audios/Talha Anjum/Regrets.jpg" class="song-icon">Regrets</div>
+<div class="song" onclick="playSong(9)"><img src="Audios/Talha Anjum/Since Tum.jpg" class="song-icon">Since Tum</div>
+
+</div>
+
+<div id="player">
+
+Now Playing: <span id="nowPlaying">None</span>
+
+<br/><br/>
+
+<input type="range" id="progress" value="0" disabled>
+<span id="time">0:00 / 0:00</span>
+
+<br/><br/>
+
+<!-- CONTROLS -->
+<button class="control-btn" onclick="prevSong()">
+<svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg>
+</button>
+
+<button id="playBtn" onclick="togglePlay()" disabled>
+<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+</button>
+
+<button class="control-btn" onclick="nextSong()">
+<svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+</button>
+
+<button id="loopBtn" class="control-btn" onclick="toggleLoop()">
+<svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V6a2 2 0 0 1 2-2h10V1zM7 23l-4-4 4-4v3h10v-4h2v4a2 2 0 0 1-2 2H7v3z"/></svg>
+</button>
+
+<div class="controls">
+<button id="muteBtn" onclick="toggleMute()">🔊</button>
+<input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+</div>
+
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+let audio = document.getElementById("audio");
+let nowPlaying = document.getElementById("nowPlaying");
+let progress = document.getElementById("progress");
+let volume = document.getElementById("volume");
+let muteBtn = document.getElementById("muteBtn");
+let playBtn = document.getElementById("playBtn");
+let loopBtn = document.getElementById("loopBtn");
+let timeDisplay = document.getElementById("time");
+
+let songs = document.getElementsByClassName("song");
+
+let playlist = [
+"Audios/Talha Anjum/Afsanay.mp3",
+"Audios/Talha Anjum/Agency.mp3",
+"Audios/Talha Anjum/Departure Lane.mp3",
+"Audios/Talha Anjum/Downers At Dusk.mp3",
+"Audios/Talha Anjum/Happy Hour.mp3",
+"Audios/Talha Anjum/Heartbreak Kid.mp3",
+"Audios/Talha Anjum/Kaun Talha.mp3",
+"Audios/Talha Anjum/Me  And  You.mp3",
+"Audios/Talha Anjum/Regrets.mp3",
+"Audios/Talha Anjum/Since Tum.mp3"
+];
+
+let names = [
+"Afsanay",
+"Agency",
+"Departure Lane",
+"Downers At Dusk",
+"Happy Hour",
+"Heartbreak Kid",
+"Kaun Talha",
+"Me And You",
+"Regrets",
+"Since Tum"
+];
+
+let currentSong = -1;
+
+function playSong(index) {
+currentSong = index;
+audio.src = playlist[index];
+audio.play();
+nowPlaying.innerText = names[index];
+progress.disabled = false;
+playBtn.disabled = false;
+
+for (let i = 0; i < songs.length; i++) {
+songs[i].classList.remove("active");
+}
+songs[index].classList.add("active");
+}
+
+function togglePlay() {
+audio.paused ? audio.play() : audio.pause();
+}
+
+function nextSong() {
+currentSong = (currentSong + 1) % playlist.length;
+playSong(currentSong);
+}
+
+function prevSong() {
+currentSong = (currentSong - 1 + playlist.length) % playlist.length;
+playSong(currentSong);
+}
+
+function toggleLoop() {
+audio.loop = !audio.loop;
+loopBtn.classList.toggle("active", audio.loop);
+}
+
+function toggleMute() {
+audio.muted = !audio.muted;
+muteBtn.innerText = audio.muted ? "🔇" : "🔊";
+}
+
+audio.ontimeupdate = function () {
+if (audio.duration) {
+progress.value = (audio.currentTime / audio.duration) * 100;
+timeDisplay.innerText =
+Math.floor(audio.currentTime / 60) + ":" +
+String(Math.floor(audio.currentTime % 60)).padStart(2, "0") +
+" / " +
+Math.floor(audio.duration / 60) + ":" +
+String(Math.floor(audio.duration % 60)).padStart(2, "0");
+}
+};
+
+volume.oninput = function () {
+audio.volume = this.value;
+};
+
+progress.oninput = function () {
+audio.currentTime = (progress.value / 100) * audio.duration;
+};
+
+audio.onplay = () => {
+playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+};
+
+audio.onpause = () => {
+playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+};
+
+audio.onended = () => {
+if (!audio.loop) {
+nextSong();
+}
+};
+</script>
+
+</body>
+</html>
