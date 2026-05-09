@@ -194,12 +194,18 @@ padding: 15px;
 }
 
 .grid {
+display: flex;
+flex-direction: column;
 gap: 12px;
+max-height: calc(100vh - 180px);
+overflow-y: auto;
+overflow-x: hidden;
+-webkit-overflow-scrolling: touch;
 }
 
 .album {
-min-width: 140px;
-width: 140px;
+min-width: auto;
+width: 100%;
 padding: 10px;
 }
 
@@ -279,9 +285,12 @@ let suggestions = document.getElementById("suggestions");
 function procurar() {
 let input = document.getElementById("search").value.toLowerCase();
 let cards = document.getElementsByClassName("album");
+let grid = document.querySelector(".grid");
 
 suggestions.innerHTML = "";
 let count = 0;
+let matchingCards = [];
+let nonMatchingCards = [];
 
 for (let card of cards) {
 let text = card.innerText.toLowerCase();
@@ -289,6 +298,7 @@ let text = card.innerText.toLowerCase();
 /* 🎬 FILTER */
 if (text.includes(input)) {
 card.classList.remove("hide");
+matchingCards.push(card);
 
 /* 🔍 SUGGESTIONS */
 if (input && count < 5) {
@@ -317,7 +327,14 @@ count++;
 
 } else {
 card.classList.add("hide");
+nonMatchingCards.push(card);
 }
+}
+
+/* REORDER: Matching albums first, then non-matching */
+let allCards = matchingCards.concat(nonMatchingCards);
+for (let card of allCards) {
+grid.appendChild(card.parentElement); // Move the <a> element
 }
 
 /* SHOW / HIDE */
