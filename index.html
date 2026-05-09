@@ -75,6 +75,16 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 padding: 10px;
 cursor: pointer;
 transition: 0.2s;
+display: flex;
+align-items: center;
+}
+
+.suggestion-icon {
+width: 22px;
+height: 22px;
+border-radius: 4px;
+margin-right: 8px;
+vertical-align: middle;
 }
 
 .suggestion:hover {
@@ -213,6 +223,11 @@ padding: 10px;
 height: 120px;
 }
 
+.suggestion-icon {
+width: 18px;
+height: 18px;
+}
+
 }
 
 </style>
@@ -312,7 +327,7 @@ let link = card.parentElement.href;
 
 /* BUILD UI (ICON + NAME) */
 div.innerHTML = `
-  <img src="${imgSrc}" style="width:22px;height:22px;border-radius:4px;margin-right:8px;vertical-align:middle;">
+  <img src="${imgSrc}" class="suggestion-icon">
   ${name}
 `;
 
