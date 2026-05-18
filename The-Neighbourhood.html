@@ -5,8 +5,250 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="../Style%20Index.css">
+<style>
+body {
+background-color: #121212;
+color: white;
+font-family: Arial;
+margin: 0;
+scroll-behavior: smooth;
+}
 
+/* MENU */
+#menu {
+width: 200px;
+height: 100vh;
+float: left;
+background-color: black;
+padding-left: 15px;
+padding-top: 10px;
+}
+
+/* LOGO */
+#logo {
+color: #1DB954;
+text-decoration: none;
+}
+
+/* SEARCH */
+#search {
+width: 170px;
+height: 32px;
+background-color: #181818;
+border: 1px solid #333;
+color: white;
+padding-left: 12px;
+border-radius: 20px;
+outline: none;
+margin-top: 10px;
+transition: 0.3s;
+}
+
+#search:focus {
+border: 1px solid #1DB954;
+box-shadow: 0 0 8px #1DB954;
+}
+
+/* CONTENT */
+#conteudo {
+margin-left: 220px;
+padding: 20px;
+padding-bottom: 200px;
+}
+
+/* HEADER */
+#album-header {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+#album-header img {
+width: 150px;
+border-radius: 10px;
+}
+
+/* SONGS */
+.song {
+padding: 10px;
+border-bottom: 1px solid #333;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.song:hover {
+background-color: #282828;
+}
+
+.song-icon {
+width: 40px;
+height: 40px;
+object-fit: cover;
+border-radius: 6px;
+}
+
+.active {
+background-color: #1DB954;
+color: black;
+}
+
+/* PLAYER */
+#player {
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+background: #181818;
+padding: 15px;
+text-align: center;
+}
+
+/* SPOTIFY CONTROLS */
+.control-btn {
+background: none;
+border: none;
+cursor: pointer;
+margin: 0 6px;
+opacity: 0.8;
+transition: 0.2s;
+}
+
+.control-btn:hover {
+opacity: 1;
+transform: scale(1.1);
+}
+
+.control-btn svg {
+width: 20px;
+height: 20px;
+fill: white;
+}
+
+#loopBtn svg {
+fill: #888;
+}
+
+#loopBtn.active svg {
+fill: #1DB954;
+}
+
+#playBtn {
+background: #1DB954;
+border-radius: 50%;
+width: 40px;
+height: 40px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: none;
+cursor: pointer;
+}
+
+#playBtn svg {
+fill: black;
+width: 18px;
+height: 18px;
+}
+
+/* MUTE */
+#muteBtn {
+background: none;
+border: none;
+color: white;
+font-size: 18px;
+cursor: pointer;
+}
+
+/* PROGRESS */
+#progress {
+appearance: none;
+width: 350px;
+height: 8px;
+border-radius: 10px;
+background: #333;
+cursor: pointer;
+}
+
+#volume {
+appearance: none;
+width: 150px;
+height: 6px;
+border-radius: 10px;
+background: #333;
+cursor: pointer;
+}
+
+#progress::-webkit-slider-thumb,
+#volume::-webkit-slider-thumb {
+appearance: none;
+width: 12px;
+height: 12px;
+border-radius: 50%;
+background: white;
+cursor: pointer;
+}
+
+/* CONTROLS */
+.controls {
+position: absolute;
+right: 120px;
+bottom: 20px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+#time {
+margin-left: 10px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+#menu {
+width: 100%;
+height: auto;
+float: none;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px;
+}
+
+#conteudo {
+margin-left: 0;
+padding: 15px;
+padding-bottom: 200px;
+}
+
+#album-header {
+flex-direction: column;
+align-items: flex-start;
+}
+
+#album-header img {
+width: 120px;
+}
+
+#progress {
+width: 90%;
+}
+
+.controls {
+position: static;
+margin-top: 10px;
+justify-content: center;
+}
+
+#volume {
+width: 100px;
+}
+
+}
+
+</style>
 </head>
 
 <body>
@@ -28,18 +270,16 @@
 
 <br/>
 
-<div id="song-list">
-<div class="song" onclick="playSong(0)"><img src="Audios/The Neighbourhood/Sweater Weather.jpg">Sweater Weather</div>
-<div class="song" onclick="playSong(1)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg">Reflections</div>
-<div class="song" onclick="playSong(2)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg">Softcore</div>
-<div class="song" onclick="playSong(3)"><img src="Audios/The Neighbourhood/Daddy Issues.jpg">Daddy Issues</div>
-<div class="song" onclick="playSong(4)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg">You Get Me So High</div>
-<div class="song" onclick="playSong(5)"><img src="Audios/The Neighbourhood/A Little Death.jpg">A Little Death</div>
-<div class="song" onclick="playSong(6)"><img src="Audios/The Neighbourhood/Afraid.jpg">Afraid</div>
-<div class="song" onclick="playSong(7)"><img src="Audios/The Neighbourhood/Cry Baby.jpg">Cry Baby</div>
-<div class="song" onclick="playSong(8)"><img src="Audios/The Neighbourhood/Nervous.jpg">Nervous</div>
-<div class="song" onclick="playSong(9)"><img src="Audios/The Neighbourhood/The Beach.jpg">The Beach</div>
-</div>
+<div class="song" onclick="playSong(0)"><img src="Audios/The Neighbourhood/Sweater Weather.jpg" class="song-icon">Sweater Weather</div>
+<div class="song" onclick="playSong(1)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg" class="song-icon">Reflections</div>
+<div class="song" onclick="playSong(2)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg" class="song-icon">Softcore</div>
+<div class="song" onclick="playSong(3)"><img src="Audios/The Neighbourhood/Daddy Issues.jpg" class="song-icon">Daddy Issues</div>
+<div class="song" onclick="playSong(4)"><img src="Audios/The Neighbourhood/The Neighbourhood.jpg" class="song-icon">You Get Me So High</div>
+<div class="song" onclick="playSong(5)"><img src="Audios/The Neighbourhood/A Little Death.jpg" class="song-icon">A Little Death</div>
+<div class="song" onclick="playSong(6)"><img src="Audios/The Neighbourhood/Afraid.jpg" class="song-icon">Afraid</div>
+<div class="song" onclick="playSong(7)"><img src="Audios/The Neighbourhood/Cry Baby.jpg" class="song-icon">Cry Baby</div>
+<div class="song" onclick="playSong(8)"><img src="Audios/The Neighbourhood/Nervous.jpg" class="song-icon">Nervous</div>
+<div class="song" onclick="playSong(9)"><img src="Audios/The Neighbourhood/The Beach.jpg" class="song-icon">The Beach</div>
 
 </div>
 
@@ -54,6 +294,7 @@ Now Playing: <span id="nowPlaying">None</span>
 
 <br/><br/>
 
+<!-- CONTROLS -->
 <button class="control-btn" onclick="prevSong()">
 <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg>
 </button>
@@ -175,10 +416,7 @@ muteBtn.innerText = audio.muted ? "🔇" : "🔊";
 
 audio.ontimeupdate = function () {
 if (audio.duration) {
-let percent = (audio.currentTime / audio.duration) * 100;
-progress.value = percent;
-updateBar(progress);
-
+progress.value = (audio.currentTime / audio.duration) * 100;
 timeDisplay.innerText =
 Math.floor(audio.currentTime / 60) + ":" +
 String(Math.floor(audio.currentTime % 60)).padStart(2, "0") +
@@ -195,10 +433,8 @@ updateBar(this);
 
 progress.oninput = function () {
 audio.currentTime = (progress.value / 100) * audio.duration;
+updateBar(this);
 };
-
-updateBar(volume);
-updateBar(progress);
 
 audio.onplay = () => {
 playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
@@ -208,11 +444,7 @@ audio.onpause = () => {
 playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
 };
 
-audio.onended = () => {
-if (currentSong >= 0) {
-nextSong();
-}
-};
+audio.onended = nextSong;
 </script>
 
 </body>
