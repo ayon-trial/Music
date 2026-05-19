@@ -144,6 +144,11 @@ align-items: center;
 justify-content: center;
 border: none;
 cursor: pointer;
+transition: box-shadow 0.2s ease;
+}
+
+#playBtn.playing {
+box-shadow: 0 0 18px rgba(29, 185, 84, 0.9), inset 0 0 8px rgba(29, 185, 84, 0.6);
 }
 
 #playBtn svg {
@@ -167,8 +172,9 @@ appearance: none;
 width: 350px;
 height: 8px;
 border-radius: 10px;
-background: #333;
+background: linear-gradient(90deg, #1DB954 0%, #333 0%);
 cursor: pointer;
+transition: background 0.1s ease-in-out;
 }
 
 #volume {
@@ -188,6 +194,24 @@ height: 12px;
 border-radius: 50%;
 background: white;
 cursor: pointer;
+}
+
+#progress::-webkit-slider-runnable-track {
+background: transparent;
+border-radius: 10px;
+}
+
+#progress::-moz-range-track {
+background: transparent;
+border-radius: 10px;
+}
+
+#progress::-ms-fill-lower {
+background: transparent;
+}
+
+#progress::-ms-fill-upper {
+background: transparent;
 }
 
 /* CONTROLS */
@@ -291,7 +315,7 @@ Now Playing: <span id="nowPlaying">None</span>
 
 <br/><br/>
 
-<input type="range" id="progress" value="0" disabled>
+<input type="range" id="progress" min="0" max="100" value="0" disabled>
 <span id="time">0:00 / 0:00</span>
 
 <br/><br/>
@@ -367,7 +391,10 @@ let names = [
 let currentSong = -1;
 
 function updateBar(el) {
-let value = (el.value - el.min) / (el.max - el.min) * 100;
+let min = Number(el.min) || 0;
+let max = Number(el.max) || 100;
+let value = ((Number(el.value) - min) / (max - min)) * 100;
+value = Math.max(0, Math.min(100, value));
 
 if (el.id === "progress") {
 el.style.background = `linear-gradient(to right,
@@ -388,6 +415,8 @@ audio.play();
 nowPlaying.innerText = names[index];
 
 progress.disabled = false;
+progress.value = 0;
+updateBar(progress);
 playBtn.disabled = false;
 
 for (let i = 0; i < songs.length; i++) {
@@ -423,6 +452,7 @@ muteBtn.innerText = audio.muted ? "🔇" : "🔊";
 audio.ontimeupdate = function () {
 if (audio.duration) {
 progress.value = (audio.currentTime / audio.duration) * 100;
+updateBar(progress);
 timeDisplay.innerText =
 Math.floor(audio.currentTime / 60) + ":" +
 String(Math.floor(audio.currentTime % 60)).padStart(2, "0") +
@@ -444,10 +474,12 @@ updateBar(this);
 
 audio.onplay = () => {
 playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+playBtn.classList.add("playing");
 };
 
 audio.onpause = () => {
 playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+playBtn.classList.remove("playing");
 };
 
 audio.onended = nextSong;
