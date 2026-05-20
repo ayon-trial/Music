@@ -1,366 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Music</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body {
-background-color: #121212;
-color: white;
-font-family: Arial;
-margin: 0;
-display: flex;
-}
-
-/* SIDEBAR */
-#menu {
-width: 220px;
-height: 100vh;
-background-color: #000;
-padding: 20px;
-position: fixed;
-left: 0;
-top: 0;
-}
-
-#logo {
-font-size: 28px;
-font-weight: bold;
-color: #1DB954;
-text-decoration: none;
-display: block;
-margin-bottom: 25px;
-}
-
-/* SEARCH */
-.search-box {
-position: relative;
-}
-
-#search {
-width: 180px;
-height: 34px;
-background-color: #181818;
-border: 1px solid #333;
-color: white;
-padding-left: 12px;
-border-radius: 20px;
-outline: none;
-transition: 0.3s;
-}
-
-#search:focus {
-border: 1px solid #1DB954;
-box-shadow: 0 0 8px #1DB954;
-}
-
-/* 🔍 SUGGESTIONS (FIXED PROPERLY) */
-#suggestions {
-position: absolute;
-top: 100%;
-left: 0;
-width: 100%;
-margin-top: 6px;
-background: #181818;
-border-radius: 10px;
-overflow: hidden;
-display: none;
-z-index: 1000;
-box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-
-.suggestion {
-padding: 10px;
-cursor: pointer;
-transition: 0.2s;
-display: flex;
-align-items: center;
-gap: 10px;
-}
-
-.suggestion-icon {
-width: 20px;
-height: 20px;
-border-radius: 6px;
-margin-right: 8px;
-object-fit: cover;
-background: #121212;
-border: 1px solid rgba(255,255,255,0.12);
-box-shadow: 0 1px 4px rgba(0,0,0,0.25);
-}
-
-.suggestion:hover {
-background: #282828;
-color: #1DB954;
-}
-
-/* MAIN */
-#conteudo {
-margin-left: 240px;
-padding: 30px;
-width: calc(100% - 240px);
-}
-
-h2 {
-font-size: 26px;
-margin-bottom: 20px;
-}
-
-/* ROW */
-.grid {
-display: flex;
-gap: 20px;
-overflow-x: auto;
-padding-bottom: 10px;
-scroll-behavior: smooth;
-}
-
-/* SCROLLBAR */
-.grid::-webkit-scrollbar {
-height: 6px;
-}
-
-.grid::-webkit-scrollbar-thumb {
-background: #1DB954;
-border-radius: 10px;
-}
-
-/* CARD */
-.album {
-min-width: 180px;
-width: 180px;
-background-color: #181818;
-border-radius: 12px;
-padding: 12px;
-transition: 0.3s, opacity 0.3s, transform 0.3s;
-cursor: pointer;
-text-align: center;
-flex: 0 0 auto;
-}
-
-.album:hover {
-background-color: #282828;
-transform: translateY(-5px);
-}
-
-/* 🎬 ANIMATION */
-.album.hide {
-opacity: 0;
-transform: scale(0.8);
-pointer-events: none;
-}
-
-/* IMAGE */
-.album img {
-width: 100%;
-height: 160px;
-object-fit: cover;
-border-radius: 10px;
-display: block;
-margin: 0 auto 10px auto;
-}
-
-/* TEXT */
-.album b {
-font-size: 14px;
-display: block;
-margin-bottom: 4px;
-}
-
-.album span {
-font-size: 12px;
-color: #b3b3b3;
-}
-
-/* LINKS */
-a {
-text-decoration: none;
-color: white;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-
-body {
-flex-direction: column;
-}
-
-#menu {
-width: 100%;
-height: auto;
-position: relative;
-display: flex;
-align-items: center;
-justify-content: space-between;
-}
-
-#search {
-width: 120px;
-height: 30px;
-}
-
-#conteudo {
-margin-left: 0;
-width: 100%;
-padding: 15px;
-}
-
-.grid {
-display: flex;
-flex-direction: column;
-gap: 12px;
-max-height: calc(100vh - 180px);
-overflow-y: auto;
-overflow-x: hidden;
--webkit-overflow-scrolling: touch;
-}
-
-.album {
-min-width: auto;
-width: 100%;
-padding: 10px;
-}
-
-.album img {
-height: 120px;
-}
-
-.suggestion-icon {
-width: 18px;
-height: 18px;
-}
-
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Style.css">
 </head>
-
 <body>
+  <div id="app" class="page-shell">
+    <aside id="menu" class="sidebar">
+      <a id="logo" href="#" class="brand">Spotify</a>
 
-<div id="menu">
-<a id="logo" href="#">Spotify</a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <button class="nav-btn active" type="button">Library</button>
+        <button class="nav-btn" type="button">Favorites</button>
+      </nav>
 
-<div class="search-box">
-<input type="text" id="search" placeholder="Search..." onkeyup="procurar()">
-<div id="suggestions"></div>
-</div>
+    </aside>
 
-</div>
+    <main class="main-content">
+      <header class="topbar sticky">
+        <div class="search-box top-search">
+          <span class="search-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10.5" cy="10.5" r="7" stroke="currentColor" stroke-width="1.8" />
+              <path d="M16.75 16.75L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </span>
+          <input id="search" type="search" aria-label="What do you want to play?" placeholder="What do you want to play?" autocomplete="off">
+          <div id="suggestions" class="suggestions"></div>
+        </div>
+      </header>
 
-<div id="conteudo">
-<h2>What do you want to listen to?</h2>
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2>What do you want to listen to?</h2>
+            <p class="section-description"></p>
+          </div>
+        </div>
 
-<div class="grid">
+        <div id="albumGrid" class="grid" tabindex="0" aria-label="Artist album grid">
 
-<a href="The-Weeknd.html">
-<div class="album">
-<img src="Images/the weeknd.jpg">
-<b>The Weeknd</b>
-<span>Artist</span>
-</div>
-</a>
+          <a class="album-card" href="The-Weeknd.html" data-search="The Weeknd" data-bg="#941815" data-preview="Audios/The Weeknd/Blinding Lights.mp3" data-listeners="84M" data-songs="15" data-albums="4">
+            <div class="album-art">
+              <img src="Images/the weeknd.jpg" alt="The Weeknd" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>The Weeknd</b>
+              <span>Artist</span>
+            </div>
+          </a>
 
-<a href="Lana-Del-Rey.html">
-<div class="album">
-<img src="Images/lana del rey.jpg">
-<b>Lana Del Rey</b>
-<span>Artist</span>
-</div>
-</a>
+          <a class="album-card" href="Lana-Del-Rey.html" data-search="Lana Del Rey" data-bg="#5c3f8d" data-preview="Audios/Lana Del Rey/Video Games.mp3" data-listeners="39M" data-songs="18" data-albums="7">
+            <div class="album-art">
+              <img src="Images/lana del rey.jpg" alt="Lana Del Rey" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Lana Del Rey</b>
+              <span>Artist</span>
+            </div>
+          </a>
 
-<a href="The-Neighbourhood.html">
-<div class="album">
-<img src="Images/the neighbourhood.jpg">
-<b>The Neighbourhood</b>
-<span>Artist</span>
-</div>
-</a>
+          <a class="album-card" href="The-Neighbourhood.html" data-search="The Neighbourhood" data-bg="#2f3d4e" data-preview="Audios/The Neighbourhood/sweater weather.mp3" data-listeners="28M" data-songs="10" data-albums="3">
+            <div class="album-art">
+              <img src="Images/the neighbourhood.jpg" alt="The Neighbourhood" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>The Neighbourhood</b>
+              <span>Artist</span>
+            </div>
+          </a>
 
-<a href="Talha-Anjum.html">
-<div class="album">
-<img src="Images/talha anjum.jpg">
-<b>Talha Anjum</b>
-<span>Artist</span>
-</div>
-</a>
+          <a class="album-card" href="Talha-Anjum.html" data-search="Talha Anjum" data-bg="#1f5f32" data-preview="Audios/Talha Anjum/Afsanay.mp3" data-listeners="12M" data-songs="10" data-albums="2">
+            <div class="album-art">
+              <img src="Images/talha anjum.jpg" alt="Talha Anjum" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Talha Anjum</b>
+              <span>Artist</span>
+            </div>
+          </a>
 
-<a href="Chase-Atlantic.html">
-<div class="album">
-<img src="Images/chase atlantic.jpg">
-<b>Chase Atlantic</b>
-<span>Artist</span>
-</div>
-</a>
+          <a class="album-card" href="Chase-Atlantic.html" data-search="Chase Atlantic" data-bg="#18475f" data-preview="Audios/Chase Atlantic/Church.mp3" data-listeners="6M" data-songs="10" data-albums="2">
+            <div class="album-art">
+              <img src="Images/chase atlantic.jpg" alt="Chase Atlantic" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Chase Atlantic</b>
+              <span>Artist</span>
+            </div>
+          </a>
 
-</div>
-</div>
+        </div>
 
-<script>
+        <div class="empty-state hidden">No matches found. Try another artist or song.</div>
+      </section>
+    </main>
 
-let suggestions = document.getElementById("suggestions");
+    <div class="page-transition"></div>
+  </div>
 
-function procurar() {
-let input = document.getElementById("search").value.toLowerCase();
-let cards = document.getElementsByClassName("album");
-let grid = document.querySelector(".grid");
-
-suggestions.innerHTML = "";
-let count = 0;
-let matchingCards = [];
-let nonMatchingCards = [];
-
-for (let card of cards) {
-let text = card.innerText.toLowerCase();
-
-/* 🎬 FILTER */
-if (text.includes(input)) {
-card.classList.remove("hide");
-matchingCards.push(card);
-
-/* 🔍 SUGGESTIONS */
-if (input && count < 5) {
-let div = document.createElement("div");
-div.className = "suggestion";
-
-/* GET NAME + IMAGE + LINK */
-let name = card.querySelector("b").innerText;
-let imgSrc = card.querySelector("img").src;
-let link = card.parentElement.href;
-
-/* BUILD UI (ICON + NAME) */
-div.innerHTML = `
-  <img src="${imgSrc}" class="suggestion-icon">
-  ${name}
-`;
-
-/* CLICK → OPEN PAGE */
-div.onclick = function () {
-window.location.href = link;
-};
-
-suggestions.appendChild(div);
-count++;
-}
-
-} else {
-card.classList.add("hide");
-nonMatchingCards.push(card);
-}
-}
-
-/* REORDER: Matching albums first, then non-matching */
-let allCards = matchingCards.concat(nonMatchingCards);
-for (let card of allCards) {
-grid.appendChild(card.parentElement); // Move the <a> element
-}
-
-/* SHOW / HIDE */
-suggestions.style.display = input ? "block" : "none";
-}
-
-</script>
-
+  <script src="script.js" defer></script>
 </body>
 </html>
