@@ -1,285 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title>Lana Del Rey</title>
-
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body {
-background-color: #121212;
-color: white;
-font-family: Arial;
-margin: 0;
-scroll-behavior: smooth;
-}
-
-/* MENU */
-#menu {
-width: 200px;
-height: 100vh;
-float: left;
-background-color: black;
-padding-left: 15px;
-padding-top: 10px;
-}
-
-/* LOGO */
-#logo {
-color: #1DB954;
-text-decoration: none;
-}
-
-/* SEARCH */
-#search {
-width: 170px;
-height: 32px;
-background-color: #181818;
-border: 1px solid #333;
-color: white;
-padding-left: 12px;
-border-radius: 20px;
-outline: none;
-margin-top: 10px;
-transition: 0.3s;
-}
-
-#search:focus {
-border: 1px solid #1DB954;
-box-shadow: 0 0 8px #1DB954;
-}
-
-/* CONTENT */
-#conteudo {
-margin-left: 220px;
-padding: 20px;
-padding-bottom: 200px;
-}
-
-/* HEADER */
-#album-header {
-display: flex;
-align-items: center;
-gap: 20px;
-}
-
-#album-header img {
-width: 150px;
-border-radius: 10px;
-}
-
-/* SONGS */
-.song {
-padding: 10px;
-border-bottom: 1px solid #333;
-cursor: pointer;
-display: flex;
-align-items: center;
-gap: 10px;
-}
-
-.song:hover {
-background-color: #282828;
-}
-
-.song-icon {
-width: 40px;
-height: 40px;
-object-fit: cover;
-border-radius: 6px;
-}
-
-.active {
-background-color: #1DB954;
-color: black;
-}
-
-/* PLAYER */
-#player {
-position: fixed;
-bottom: 0;
-left: 0;
-width: 100%;
-background: #181818;
-padding: 15px;
-text-align: center;
-}
-
-/* SPOTIFY CONTROLS */
-.control-btn {
-background: none;
-border: none;
-cursor: pointer;
-margin: 0 6px;
-opacity: 0.8;
-transition: 0.2s;
-}
-
-.control-btn:hover {
-opacity: 1;
-transform: scale(1.1);
-}
-
-.control-btn svg {
-width: 20px;
-height: 20px;
-fill: white;
-}
-
-#loopBtn svg {
-fill: #888;
-}
-
-#loopBtn.active svg {
-fill: #1DB954;
-}
-
-#playBtn {
-background: #1DB954;
-border-radius: 50%;
-width: 40px;
-height: 40px;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-border: none;
-cursor: pointer;
-transition: box-shadow 0.2s ease;
-}
-
-#playBtn.playing {
-box-shadow: 0 0 18px rgba(29, 185, 84, 0.9), inset 0 0 8px rgba(29, 185, 84, 0.6);
-}
-
-#playBtn svg {
-fill: black;
-width: 18px;
-height: 18px;
-}
-
-/* MUTE */
-#muteBtn {
-background: none;
-border: none;
-color: white;
-font-size: 18px;
-cursor: pointer;
-}
-
-/* PROGRESS */
-#progress {
-appearance: none;
-width: 350px;
-height: 8px;
-border-radius: 10px;
-background: linear-gradient(90deg, #1DB954 0%, #333 0%);
-cursor: pointer;
-transition: background 0.1s ease-in-out;
-}
-
-#volume {
-appearance: none;
-width: 150px;
-height: 6px;
-border-radius: 10px;
-background: #333;
-cursor: pointer;
-}
-
-#progress::-webkit-slider-thumb,
-#volume::-webkit-slider-thumb {
-appearance: none;
-width: 12px;
-height: 12px;
-border-radius: 50%;
-background: white;
-cursor: pointer;
-}
-
-#progress::-webkit-slider-runnable-track {
-background: transparent;
-border-radius: 10px;
-}
-
-#progress::-moz-range-track {
-background: transparent;
-border-radius: 10px;
-}
-
-#progress::-ms-fill-lower {
-background: transparent;
-}
-
-#progress::-ms-fill-upper {
-background: transparent;
-}
-
-/* CONTROLS */
-.controls {
-position: absolute;
-right: 120px;
-bottom: 20px;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-
-#time {
-margin-left: 10px;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-
-#menu {
-width: 100%;
-height: auto;
-float: none;
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 10px;
-}
-
-#conteudo {
-margin-left: 0;
-padding: 15px;
-padding-bottom: 200px;
-}
-
-#album-header {
-flex-direction: column;
-align-items: flex-start;
-}
-
-#album-header img {
-width: 120px;
-}
-
-#progress {
-width: 90%;
-}
-
-.controls {
-position: static;
-margin-top: 10px;
-justify-content: center;
-}
-
-#volume {
-width: 100px;
-}
-
-}
-
-</style>
+<link rel="stylesheet" href="../Style.css">
 </head>
 
 <body>
-
+<div class="page-shell">
 <div id="menu">
-<a id="logo" href="index.html"><h2>Spotify</h2></a>
-<input type="text" id="search" placeholder="Search...">
+  <a id="logo" href="index.html"><h2>Spotify</h2></a>
+  <div class="search-wrapper">
+    <input type="text" id="search" placeholder="Search songs...">
+    <div id="suggestions" class="suggestions"></div>
+  </div>
 </div>
 
 <div id="conteudo">
@@ -321,6 +56,7 @@ Now Playing: <span id="nowPlaying">None</span>
 <br/><br/>
 
 <!-- CONTROLS -->
+<div class="button-group">
 <button class="control-btn" onclick="prevSong()">
 <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg>
 </button>
@@ -336,6 +72,7 @@ Now Playing: <span id="nowPlaying">None</span>
 <button id="loopBtn" class="control-btn" onclick="toggleLoop()">
 <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V6a2 2 0 0 1 2-2h10V1zM7 23l-4-4 4-4v3h10v-4h2v4a2 2 0 0 1-2 2H7v3z"/></svg>
 </button>
+</div>
 
 <div class="controls">
 <button id="muteBtn" onclick="toggleMute()">🔊</button>
@@ -345,7 +82,9 @@ Now Playing: <span id="nowPlaying">None</span>
 </div>
 
 <audio id="audio"></audio>
-
+</div>
+<div class="page-transition"></div>
+<script src="script.js"></script>
 <script>
 let audio = document.getElementById("audio");
 let nowPlaying = document.getElementById("nowPlaying");
