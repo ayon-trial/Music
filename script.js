@@ -12,12 +12,6 @@ const transition = document.querySelector('.page-transition');
 const nowPlayingLabel = document.querySelector('.now-playing');
 const player = document.getElementById('player');
 const statCards = Array.from(document.querySelectorAll('.stat-card span'));
-
-const styleLink = document.querySelector('link[rel="stylesheet"][href="Style.css"]');
-if (styleLink && location.pathname.includes('/Spotify/')) {
-  styleLink.href = '../Style.css';
-}
-
 const previewAudio = new Audio();
 let selectedVisibleIndex = 0;
 let currentPreview = null;
