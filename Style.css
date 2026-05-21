@@ -810,78 +810,323 @@ a {
   flex-wrap: wrap;
 }
 
+/* ========================================
+   UNIVERSAL MOBILE + DESKTOP IMPROVEMENTS
+======================================== */
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+input,
+button,
+textarea,
+select {
+  font-size: 16px;
+}
+
+/* Better tap feedback */
+.album-card:active,
+.song:active,
+.nav-btn:active,
+.control-btn:active,
+#playBtn:active,
+.theme-toggle:active {
+  transform: scale(0.97);
+}
+
+/* Smoother mobile feel */
+.album-card,
+.song,
+.nav-btn,
+.control-btn,
+#playBtn,
+.theme-toggle {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iPhone safe area */
+#player {
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+
+/* ========================================
+   TABLETS
+======================================== */
+
 @media (max-width: 1120px) {
-  #menu,
-  .sidebar {
+
+  .sidebar,
+  #menu {
     position: relative;
     width: 100%;
     min-height: auto;
+    height: auto;
     border-right: none;
     border-bottom: 1px solid var(--border);
-  }
-
-  #conteudo,
-  .main-content {
-    margin-left: 0;
-    padding: 28px 24px 180px;
-  }
-
-  #player {
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: calc(100% - 24px);
-    padding: 16px 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  #album-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  #album-header img {
-    width: 140px;
-  }
-
-  #progress {
-    width: 100%;
-  }
-
-  #volume {
-    width: 100%;
-    max-width: 180px;
-  }
-
-  #player {
-    gap: 12px;
-  }
-}
-
-@media (max-width: 520px) {
-  #menu {
     padding: 20px;
   }
 
-  .theme-toggle {
+  .main-content,
+  #conteudo {
+    margin-left: 0;
+    padding: 24px 20px 160px;
+  }
+
+  .page-shell {
+    display: grid;
+    gap: 20px;
+  }
+
+  #player {
+    width: calc(100% - 24px);
+    max-width: 900px;
+    bottom: 12px;
+  }
+}
+
+/* ========================================
+   PHONES
+======================================== */
+
+@media (max-width: 768px) {
+
+  body {
+    padding-bottom: 110px;
+  }
+
+  .search-box.top-search {
+    width: 100%;
+    height: 54px;
+    padding: 0 14px;
+    border-radius: 18px;
+  }
+
+  .search-box.top-search .search-icon {
+    width: 38px;
+    height: 38px;
+    left: 10px;
+    border-radius: 12px;
+  }
+
+  .search-box.top-search #search {
+    padding-left: 58px;
     font-size: 0.95rem;
   }
 
+  .hero-copy h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .hero-copy p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .album-card {
+    border-radius: 20px;
+  }
+
+  .album-meta {
+    padding: 0 14px 14px;
+  }
+
+  .album-meta b {
+    font-size: 0.92rem;
+  }
+
+  .album-meta span {
+    font-size: 0.82rem;
+  }
+
   .song {
-    padding: 14px;
+    padding: 12px 14px;
+    gap: 12px;
+    border-radius: 16px;
+  }
+
+  .song-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  #album-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  #album-header img {
+    width: 130px;
+    height: 130px;
+    border-radius: 18px;
+  }
+
+  #album-header h1 {
+    font-size: 2rem;
+  }
+
+  #player {
+    width: calc(100% - 16px);
+    padding: 12px;
+    border-radius: 20px;
+    gap: 10px;
   }
 
   .controls {
     width: 100%;
     justify-content: center;
+    gap: 10px;
+  }
+
+  .control-btn,
+  #playBtn {
+    width: 54px;
+    height: 54px;
+  }
+
+  #progress {
+    width: 100%;
+    height: 6px;
+  }
+
+  #volume {
+    width: 120px;
+    height: 6px;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .section-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* ========================================
+   SMALL PHONES
+======================================== */
+
+@media (max-width: 520px) {
+
+  .sidebar,
+  #menu {
+    padding: 14px;
+  }
+
+  .brand,
+  #menu a#logo {
+    font-size: 1.1rem;
+  }
+
+  .nav-links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .nav-btn {
+    padding: 12px;
+    text-align: center;
+    border-radius: 14px;
+    font-size: 0.9rem;
+  }
+
+  .hero-copy p,
+  .section-description,
+  .breadcrumb-title,
+  .eyebrow {
+    display: none;
+  }
+
+  .hero-copy h1 {
+    font-size: 1.7rem;
+  }
+
+  .grid {
+    gap: 12px;
+  }
+
+  .album-card {
+    border-radius: 18px;
+  }
+
+  .album-meta {
+    padding: 0 12px 12px;
   }
 
   #player {
-    padding: 16px;
-    border-radius: 20px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    transform: none;
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    border-radius: 18px;
+  }
+
+  #player span,
+  #player #time {
+    font-size: 0.82rem;
+  }
+
+  .control-btn,
+  #playBtn {
+    width: 50px;
+    height: 50px;
+  }
+
+  #volume {
+    width: 120px;
+    height: 6px;
+  }
+
+  .recent-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    padding-bottom: 16px;
+  }
+
+  .hero-copy p,
+  .section-description {
+    max-width: 100%;
   }
 }
+
+.empty-state {
+  margin-top: 28px;
+  padding: 24px;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+input,
+button,
+textarea,
+select {
+  font-size: 16px;
+}
+
+
 
 .empty-state {
   margin-top: 28px;
@@ -936,26 +1181,6 @@ a {
   scrollbar-color: rgba(29,185,84,0.8) rgba(255,255,255,0.05);
 }
 
-@media (max-width: 1120px) {
-  .main-content {
-    margin-left: 0;
-    padding: 28px 24px 36px;
-  }
-
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .page-shell {
-    display: grid;
-    gap: 20px;
-  }
-}
-
 @media (max-width: 840px) {
   .sidebar {
     padding: 24px 18px;
@@ -982,29 +1207,6 @@ a {
 
   .recent-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 520px) {
-  .sidebar {
-    padding: 20px;
-  }
-
-  .nav-links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .nav-btn {
-    padding: 12px 14px;
-  }
-
-  .topbar {
-    padding-bottom: 16px;
-  }
-
-  .hero-copy p,
-  .section-description {
-    max-width: 100%;
   }
 }
 
