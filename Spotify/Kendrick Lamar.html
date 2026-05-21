@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Kendrick Lamar</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../Style.css">
+</head>
+
+<body>
+<div class="page-shell">
+
+<div id="menu">
+  <a id="logo" href="index.html"><h2>Spotify</h2></a>
+
+  <div class="search-wrapper">
+    <input type="text" id="search" placeholder="Search songs...">
+    <div id="suggestions" class="suggestions"></div>
+  </div>
+</div>
+
+<div id="conteudo">
+
+<div id="album-header">
+<img src="Images/kendrick lamar.jpg" alt="Kendrick Lamar">
+
+<div>
+<h1>Kendrick Lamar</h1>
+<p>Artist • Playlist</p>
+</div>
+</div>
+
+<br/>
+
+<div class="song" onclick="playSong(0)">
+<img src="Audios/Kendrick Lamar/All The Stars.jpg" class="song-icon">All The Stars</div>
+
+<div class="song" onclick="playSong(1)">
+<img src="Audios/Kendrick Lamar/Family Ties.jpg" class="song-icon">Family Ties</div>
+
+<div class="song" onclick="playSong(2)">
+<img src="Audios/Kendrick Lamar/Humble.jpg" class="song-icon">HUMBLE</div>
+
+<div class="song" onclick="playSong(3)">
+<img src="Audios/Kendrick Lamar/Like That.jpg" class="song-icon">Like That</div>
+
+<div class="song" onclick="playSong(4)">
+<img src="Audios/Kendrick Lamar/Love.jpg" class="song-icon">LOVE</div>
+
+<div class="song" onclick="playSong(5)">
+<img src="Audios/Kendrick Lamar/Luther.jpg" class="song-icon">Luther</div>
+
+<div class="song" onclick="playSong(6)">
+<img src="Audios/Kendrick Lamar/Money Trees.jpg" class="song-icon">Money Trees</div>
+
+<div class="song" onclick="playSong(7)">
+<img src="Audios/Kendrick Lamar/Not Like Us.jpg" class="song-icon">Not Like Us</div>
+
+<div class="song" onclick="playSong(8)">
+<img src="Audios/Kendrick Lamar/Swimming Pools.jpg" class="song-icon">Swimming Pools</div>
+
+<div class="song" onclick="playSong(9)">
+<img src="Audios/Kendrick Lamar/Tv Off.jpg" class="song-icon">Tv Off</div>
+
+</div>
+
+<div id="player">
+
+Now Playing: <span id="nowPlaying">None</span>
+
+<br/><br/>
+
+<input type="range" id="progress" min="0" max="100" value="0" disabled>
+<span id="time">0:00 / 0:00</span>
+
+<br/><br/>
+
+<!-- CONTROLS -->
+<div class="button-group">
+
+<button class="control-btn" onclick="prevSong()">
+<svg viewBox="0 0 24 24">
+<path d="M6 6h2v12H6zm3.5 6L18 6v12z"/>
+</svg>
+</button>
+
+<button id="playBtn" onclick="togglePlay()" disabled>
+<svg viewBox="0 0 24 24">
+<path d="M8 5v14l11-7z"/>
+</svg>
+</button>
+
+<button class="control-btn" onclick="nextSong()">
+<svg viewBox="0 0 24 24">
+<path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/>
+</svg>
+</button>
+
+<button id="loopBtn" class="control-btn" onclick="toggleLoop()">
+<svg viewBox="0 0 24 24">
+<path d="M17 1l4 4-4 4V6H7v4H5V6a2 2 0 0 1 2-2h10V1zM7 23l-4-4 4-4v3h10v-4h2v4a2 2 0 0 1-2 2H7v3z"/>
+</svg>
+</button>
+
+</div>
+
+<div class="controls">
+<button id="muteBtn" onclick="toggleMute()">🔊</button>
+
+<input type="range" id="volume"
+min="0"
+max="1"
+step="0.01"
+value="1">
+</div>
+
+</div>
+
+<audio id="audio"></audio>
+
+</div>
+
+<div class="page-transition"></div>
+
+<script src="script.js"></script>
+
+<script>
+
+let audio = document.getElementById("audio");
+let nowPlaying = document.getElementById("nowPlaying");
+let progress = document.getElementById("progress");
+let volume = document.getElementById("volume");
+let muteBtn = document.getElementById("muteBtn");
+let playBtn = document.getElementById("playBtn");
+let loopBtn = document.getElementById("loopBtn");
+let timeDisplay = document.getElementById("time");
+
+let songs = document.getElementsByClassName("song");
+
+let playlist = [
+"Audios/Kendrick Lamar/All The Stars.mp3",
+"Audios/Kendrick Lamar/Family Ties.mp3",
+"Audios/Kendrick Lamar/Humble.mp3",
+"Audios/Kendrick Lamar/Like That.mp3",
+"Audios/Kendrick Lamar/Love.mp3",
+"Audios/Kendrick Lamar/Luther.mp3",
+"Audios/Kendrick Lamar/Money Trees.mp3",
+"Audios/Kendrick Lamar/Not Like Us.mp3",
+"Audios/Kendrick Lamar/Swimming Pools.mp3",
+"Audios/Kendrick Lamar/Tv Off.mp3"
+];
+
+let names = [
+"All The Stars",
+"Family Ties",
+"HUMBLE.",
+"Like That",
+"LOVE.",
+"Luther",
+"Money Trees",
+"Not Like Us",
+"Swimming Pools",
+"Tv Off"
+];
+
+let currentSong = -1;
+
+function updateBar(el) {
+
+  let min = Number(el.min) || 0;
+  let max = Number(el.max) || 100;
+
+  let value = ((Number(el.value) - min) / (max - min)) * 100;
+
+  value = Math.max(0, Math.min(100, value));
+
+  if (el.id === "progress") {
+
+    el.style.background =
+    `linear-gradient(to right,
+    #1DB954 0%,
+    #1DB954 ${value}%,
+    #333 ${value}%,
+    #333 100%)`;
+
+  } else {
+
+    el.style.background =
+    `linear-gradient(to right,
+    #888 ${value}%,
+    #333 ${value}%)`;
+  }
+}
+
+function playSong(index) {
+
+  currentSong = index;
+
+  audio.src = playlist[index];
+
+  audio.play();
+
+  nowPlaying.innerText = names[index];
+
+  progress.disabled = false;
+  progress.value = 0;
+
+  updateBar(progress);
+
+  playBtn.disabled = false;
+
+  for (let i = 0; i < songs.length; i++) {
+    songs[i].classList.remove("active");
+  }
+
+  songs[index].classList.add("active");
+}
+
+function togglePlay() {
+  audio.paused ? audio.play() : audio.pause();
+}
+
+function nextSong() {
+
+  currentSong = (currentSong + 1) % playlist.length;
+
+  playSong(currentSong);
+}
+
+function prevSong() {
+
+  currentSong = (currentSong - 1 + playlist.length) % playlist.length;
+
+  playSong(currentSong);
+}
+
+function toggleLoop() {
+
+  audio.loop = !audio.loop;
+
+  loopBtn.classList.toggle("active", audio.loop);
+}
+
+function toggleMute() {
+
+  audio.muted = !audio.muted;
+
+  muteBtn.innerText = audio.muted ? "🔇" : "🔊";
+}
+
+audio.ontimeupdate = function () {
+
+  if (audio.duration) {
+
+    progress.value =
+    (audio.currentTime / audio.duration) * 100;
+
+    updateBar(progress);
+
+    timeDisplay.innerText =
+      Math.floor(audio.currentTime / 60) + ":" +
+      String(Math.floor(audio.currentTime % 60)).padStart(2, "0") +
+      " / " +
+      Math.floor(audio.duration / 60) + ":" +
+      String(Math.floor(audio.duration % 60)).padStart(2, "0");
+  }
+};
+
+volume.oninput = function () {
+
+  audio.volume = this.value;
+
+  updateBar(this);
+};
+
+progress.oninput = function () {
+
+  audio.currentTime =
+  (progress.value / 100) * audio.duration;
+
+  updateBar(this);
+};
+
+audio.onplay = () => {
+
+  playBtn.innerHTML =
+  `<svg viewBox="0 0 24 24">
+  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+  </svg>`;
+
+  playBtn.classList.add("playing");
+};
+
+audio.onpause = () => {
+
+  playBtn.innerHTML =
+  `<svg viewBox="0 0 24 24">
+  <path d="M8 5v14l11-7z"/>
+  </svg>`;
+
+  playBtn.classList.remove("playing");
+};
+
+audio.onended = nextSong;
+
+</script>
+
+</body>
+</html>
