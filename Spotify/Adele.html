@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Adele</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../Style.css">
+</head>
+
+<body>
+
+<div class="page-shell">
+
+<div id="menu">
+  <a id="logo" href="index.html"><h2>Spotify</h2></a>
+
+  <div class="search-wrapper">
+    <input type="text" id="search" placeholder="Search songs...">
+    <div id="suggestions" class="suggestions"></div>
+  </div>
+</div>
+
+<div id="conteudo">
+
+<div id="album-header">
+<img src="Images/Adele.png" alt="Adele">
+
+<div>
+<h1>Adele</h1>
+<p>Artist • Playlist</p>
+</div>
+</div>
+
+<br/>
+
+<div class="song" onclick="playSong(0)">
+<img src="Audios/Adele/Chasing Pavements.jpg" class="song-icon">
+Chasing Pavements
+</div>
+
+<div class="song" onclick="playSong(1)">
+<img src="Audios/Adele/Easy On Me.png" class="song-icon">
+Easy On Me
+</div>
+
+<div class="song" onclick="playSong(2)">
+<img src="Audios/Adele/Hello.png" class="song-icon">
+Hello
+</div>
+
+<div class="song" onclick="playSong(3)">
+<img src="Audios/Adele/Love In The Dark.jpg" class="song-icon">
+Love In The Dark
+</div>
+
+<div class="song" onclick="playSong(4)">
+<img src="Audios/Adele/Lovesong.jpg" class="song-icon">
+Lovesong
+</div>
+
+<div class="song" onclick="playSong(5)">
+<img src="Audios/Adele/Rolling In The Deep.jpg" class="song-icon">
+Rolling In The Deep
+</div>
+
+<div class="song" onclick="playSong(6)">
+<img src="Audios/Adele/Send My Love.jpg" class="song-icon">
+Send My Love
+</div>
+
+<div class="song" onclick="playSong(7)">
+<img src="Audios/Adele/Set Fire To The Rain.jpg" class="song-icon">
+Set Fire To The Rain
+</div>
+
+<div class="song" onclick="playSong(8)">
+<img src="Audios/Adele/Someone Like You.jpg" class="song-icon">
+Someone Like You
+</div>
+
+<div class="song" onclick="playSong(9)">
+<img src="Audios/Adele/Skyfall.jpg" class="song-icon">
+Skyfall
+</div>
+
+<div class="song" onclick="playSong(10)">
+<img src="Audios/Adele/When We Were Young.jpg" class="song-icon">
+When We Were Young
+</div>
+
+</div>
+
+<div id="player">
+
+Now Playing: <span id="nowPlaying">None</span>
+
+<br/><br/>
+
+<input type="range" id="progress" min="0" max="100" value="0" disabled>
+<span id="time">0:00 / 0:00</span>
+
+<br/><br/>
+
+<!-- CONTROLS -->
+<div class="button-group">
+
+<button class="control-btn" onclick="prevSong()">
+<svg viewBox="0 0 24 24">
+<path d="M6 6h2v12H6zm3.5 6L18 6v12z"/>
+</svg>
+</button>
+
+<button id="playBtn" onclick="togglePlay()" disabled>
+<svg viewBox="0 0 24 24">
+<path d="M8 5v14l11-7z"/>
+</svg>
+</button>
+
+<button class="control-btn" onclick="nextSong()">
+<svg viewBox="0 0 24 24">
+<path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/>
+</svg>
+</button>
+
+<button id="loopBtn" class="control-btn" onclick="toggleLoop()">
+<svg viewBox="0 0 24 24">
+<path d="M17 1l4 4-4 4V6H7v4H5V6a2 2 0 0 1 2-2h10V1zM7 23l-4-4 4-4v3h10v-4h2v4a2 2 0 0 1-2 2H7v3z"/>
+</svg>
+</button>
+
+</div>
+
+<div class="controls">
+<button id="muteBtn" onclick="toggleMute()">🔊</button>
+
+<input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+</div>
+
+</div>
+
+<audio id="audio"></audio>
+
+</div>
+
+<div class="page-transition"></div>
+
+<script src="script.js"></script>
+
+<script>
+
+let audio = document.getElementById("audio");
+let nowPlaying = document.getElementById("nowPlaying");
+let progress = document.getElementById("progress");
+let volume = document.getElementById("volume");
+let muteBtn = document.getElementById("muteBtn");
+let playBtn = document.getElementById("playBtn");
+let loopBtn = document.getElementById("loopBtn");
+let timeDisplay = document.getElementById("time");
+
+let songs = document.getElementsByClassName("song");
+
+let playlist = [
+
+"Audios/Adele/Chasing Pavements.mp3",
+"Audios/Adele/Easy On Me.mp3",
+"Audios/Adele/Hello.mp3",
+"Audios/Adele/Love In The Dark.mp3",
+"Audios/Adele/Lovesong.mp3",
+"Audios/Adele/Rolling in the Deep.mp3",
+"Audios/Adele/Send My Love.mp3",
+"Audios/Adele/Set Fire to the Rain.mp3",
+"Audios/Adele/Someone Like You.mp3",
+"Audios/Adele/Skyfall.mp3",
+"Audios/Adele/When We Were Young.mp3"
+
+];
+
+let names = [
+
+"Chasing Pavements",
+"Easy On Me",
+"Hello",
+"Love In The Dark",
+"Lovesong",
+"Rolling In The Deep",
+"Send My Love",
+"Set Fire To The Rain",
+"Someone Like You",
+"Skyfall",
+"When We Were Young"
+
+];
+
+let currentSong = -1;
+
+function updateBar(el) {
+
+  let min = Number(el.min) || 0;
+  let max = Number(el.max) || 100;
+
+  let value = ((Number(el.value) - min) / (max - min)) * 100;
+
+  value = Math.max(0, Math.min(100, value));
+
+  if (el.id === "progress") {
+
+    el.style.background =
+    `linear-gradient(to right,
+    #1DB954 0%,
+    #1DB954 ${value}%,
+    #333 ${value}%,
+    #333 100%)`;
+
+  } else {
+
+    el.style.background =
+    `linear-gradient(to right,
+    #888 ${value}%,
+    #333 ${value}%)`;
+
+  }
+}
+
+function playSong(index) {
+
+  currentSong = index;
+
+  audio.src = playlist[index];
+
+  audio.play();
+
+  nowPlaying.innerText = names[index];
+
+  progress.disabled = false;
+  progress.value = 0;
+
+  updateBar(progress);
+
+  playBtn.disabled = false;
+
+  for (let i = 0; i < songs.length; i++) {
+    songs[i].classList.remove("active");
+  }
+
+  songs[index].classList.add("active");
+}
+
+function togglePlay() {
+  audio.paused ? audio.play() : audio.pause();
+}
+
+function nextSong() {
+
+  currentSong = (currentSong + 1) % playlist.length;
+
+  playSong(currentSong);
+}
+
+function prevSong() {
+
+  currentSong =
+  (currentSong - 1 + playlist.length) % playlist.length;
+
+  playSong(currentSong);
+}
+
+function toggleLoop() {
+
+  audio.loop = !audio.loop;
+
+  loopBtn.classList.toggle("active", audio.loop);
+}
+
+function toggleMute() {
+
+  audio.muted = !audio.muted;
+
+  muteBtn.innerText =
+  audio.muted ? "🔇" : "🔊";
+}
+
+audio.ontimeupdate = function () {
+
+  if (audio.duration) {
+
+    progress.value =
+    (audio.currentTime / audio.duration) * 100;
+
+    updateBar(progress);
+
+    timeDisplay.innerText =
+
+      Math.floor(audio.currentTime / 60)
+      + ":" +
+
+      String(Math.floor(audio.currentTime % 60))
+      .padStart(2, "0")
+
+      + " / " +
+
+      Math.floor(audio.duration / 60)
+      + ":" +
+
+      String(Math.floor(audio.duration % 60))
+      .padStart(2, "0");
+  }
+};
+
+volume.oninput = function () {
+
+  audio.volume = this.value;
+
+  updateBar(this);
+};
+
+progress.oninput = function () {
+
+  audio.currentTime =
+  (progress.value / 100) * audio.duration;
+
+  updateBar(this);
+};
+
+audio.onplay = () => {
+
+  playBtn.innerHTML =
+  `<svg viewBox="0 0 24 24">
+  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+  </svg>`;
+
+  playBtn.classList.add("playing");
+};
+
+audio.onpause = () => {
+
+  playBtn.innerHTML =
+  `<svg viewBox="0 0 24 24">
+  <path d="M8 5v14l11-7z"/>
+  </svg>`;
+
+  playBtn.classList.remove("playing");
+};
+
+audio.onended = nextSong;
+
+</script>
+
+</body>
+</html>
