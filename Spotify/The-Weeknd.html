@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>The Weeknd</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../Style.css">
+</head>
+
+<body>
+<div class="page-shell">
+<div id="menu">
+  <a id="logo" href="index.html"><h2>Spotify</h2></a>
+  <div class="search-wrapper">
+    <input type="text" id="search" placeholder="Search songs...">
+    <div id="suggestions" class="suggestions"></div>
+  </div>
+</div>
+
+<div id="conteudo">
+
+<div id="album-header">
+<img src="Images/the weeknd.jpg">
+<div>
+<h1>The Weeknd</h1>
+<p>Artist • Playlist</p>
+</div>
+</div>
+
+<br/>
+
+<div class="song" onclick="playSong(0)"><img src="Audios/The Weeknd/After Hours.jpg" class="song-icon">After Hours</div>
+<div class="song" onclick="playSong(1)"><img src="Audios/The Weeknd/Blinding Lights.png" class="song-icon">Blinding Lights</div>
+<div class="song" onclick="playSong(2)"><img src="Audios/The Weeknd/Call Out My Name.jpg" class="song-icon">Call Out My Name</div>
+<div class="song" onclick="playSong(3)"><img src="Audios/The Weeknd/Cry For Me.jpg" class="song-icon">Cry For Me</div>
+<div class="song" onclick="playSong(4)"><img src="Audios/The Weeknd/Die For You.jpg" class="song-icon">Die For You</div>
+<div class="song" onclick="playSong(5)"><img src="Audios/The Weeknd/House Of Balloons.png" class="song-icon">House Of Balloons</div>
+<div class="song" onclick="playSong(6)"><img src="Audios/The Weeknd/I Was Never There.jpg" class="song-icon">I Was Never There</div>
+<div class="song" onclick="playSong(7)"><img src="Audios/The Weeknd/Often.jpg" class="song-icon">Often</div>
+<div class="song" onclick="playSong(8)"><img src="Audios/The Weeknd/One Of The Girls.jpg" class="song-icon">One Of The Girls</div>
+<div class="song" onclick="playSong(9)"><img src="Audios/The Weeknd/Popular.png" class="song-icon">Popular</div>
+<div class="song" onclick="playSong(10)"><img src="Audios/The Weeknd/Save Your Tears.jpg" class="song-icon">Save Your Tears</div>
+<div class="song" onclick="playSong(11)"><img src="Audios/The Weeknd/Starboy.jpg" class="song-icon">Starboy</div>
+<div class="song" onclick="playSong(12)"><img src="Audios/The Weeknd/Sao Paulo.jpg" class="song-icon">São Paulo</div>
+<div class="song" onclick="playSong(13)"><img src="Audios/The Weeknd/The Hills.jpg" class="song-icon">The Hills</div>
+<div class="song" onclick="playSong(14)"><img src="Audios/The Weeknd/Timeless.jpg" class="song-icon">Timeless</div>
+
+</div>
+
+<div id="player">
+
+Now Playing: <span id="nowPlaying">None</span>
+
+<br/><br/>
+
+<input type="range" id="progress" min="0" max="100" value="0" disabled>
+<span id="time">0:00 / 0:00</span>
+
+<br/><br/>
+
+<!-- CONTROLS -->
+<div class="button-group">
+<button class="control-btn" onclick="prevSong()">
+<svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg>
+</button>
+
+<button id="playBtn" onclick="togglePlay()" disabled>
+<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+</button>
+
+<button class="control-btn" onclick="nextSong()">
+<svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+</button>
+
+<button id="loopBtn" class="control-btn" onclick="toggleLoop()">
+<svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V6a2 2 0 0 1 2-2h10V1zM7 23l-4-4 4-4v3h10v-4h2v4a2 2 0 0 1-2 2H7v3z"/></svg>
+</button>
+</div>
+
+<div class="controls">
+<button id="muteBtn" onclick="toggleMute()">🔊</button>
+<input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+</div>
+
+</div>
+
+<audio id="audio"></audio>
+</div>
+<div class="page-transition"></div>
+<script>
+let audio = document.getElementById("audio");
+let nowPlaying = document.getElementById("nowPlaying");
+let progress = document.getElementById("progress");
+let volume = document.getElementById("volume");
+let muteBtn = document.getElementById("muteBtn");
+let playBtn = document.getElementById("playBtn");
+let loopBtn = document.getElementById("loopBtn");
+let timeDisplay = document.getElementById("time");
+
+let songs = document.getElementsByClassName("song");
+
+let playlist = [
+"Audios/The Weeknd/After Hours.mp3",
+"Audios/The Weeknd/blinding lights.mp3",
+"Audios/The Weeknd/Call Out My Name.mp3",
+"Audios/The Weeknd/Cry For Me.mp3",
+"Audios/The Weeknd/Die For You.mp3",
+"Audios/The Weeknd/House Of Balloons.mp3",
+"Audios/The Weeknd/I Was Never There.mp3",
+"Audios/The Weeknd/often.mp3",
+"Audios/The Weeknd/One Of The Girls.mp3",
+"Audios/The Weeknd/Popular.mp3",
+"Audios/The Weeknd/save your tears.mp3",
+"Audios/The Weeknd/starboy.mp3",
+"Audios/The Weeknd/São Paulo.mp3",
+"Audios/The Weeknd/the hills.mp3",
+"Audios/The Weeknd/Timeless.mp3"
+];
+
+let names = [
+"After Hours",
+"Blinding Lights",
+"Call Out My Name",
+"Cry For Me",
+"Die For You",
+"House Of Balloons",
+"I Was Never There",
+"Often",
+"One Of The Girls",
+"Popular",
+"Save Your Tears",
+"Starboy",
+"São Paulo",
+"The Hills",
+"Timeless"
+];
+
+let currentSong = -1;
+
+function playSong(index) {
+currentSong = index;
+audio.src = playlist[index];
+audio.play();
+nowPlaying.innerText = names[index];
+progress.disabled = false;
+progress.value = 0;
+updateProgressBar();
+playBtn.disabled = false;
+
+for (let i = 0; i < songs.length; i++) {
+songs[i].classList.remove("active");
+}
+songs[index].classList.add("active");
+}
+
+function togglePlay() {
+audio.paused ? audio.play() : audio.pause();
+}
+
+function updateProgressBar() {
+let value = progress.value || 0;
+progress.style.background = `linear-gradient(90deg, #1DB954 ${value}%, #333 ${value}%)`;
+}
+
+function nextSong() {
+currentSong = (currentSong + 1) % playlist.length;
+playSong(currentSong);
+}
+
+function prevSong() {
+currentSong = (currentSong - 1 + playlist.length) % playlist.length;
+playSong(currentSong);
+}
+
+function toggleLoop() {
+audio.loop = !audio.loop;
+loopBtn.classList.toggle("active", audio.loop);
+}
+
+function toggleMute() {
+audio.muted = !audio.muted;
+muteBtn.innerText = audio.muted ? "🔇" : "🔊";
+}
+
+audio.ontimeupdate = function () {
+if (audio.duration) {
+progress.value = (audio.currentTime / audio.duration) * 100;
+updateProgressBar();
+timeDisplay.innerText =
+Math.floor(audio.currentTime / 60) + ":" +
+String(Math.floor(audio.currentTime % 60)).padStart(2, "0") +
+" / " +
+Math.floor(audio.duration / 60) + ":" +
+String(Math.floor(audio.duration % 60)).padStart(2, "0");
+}
+};
+
+volume.oninput = function () {
+audio.volume = this.value;
+};
+
+progress.oninput = function () {
+audio.currentTime = (progress.value / 100) * audio.duration;
+updateProgressBar();
+};
+
+audio.onplay = () => {
+playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+playBtn.classList.add("playing");
+};
+
+audio.onpause = () => {
+playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+playBtn.classList.remove("playing");
+};
+
+audio.onended = nextSong;
+</script>
+
+</body>
+</html>
