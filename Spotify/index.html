@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tunely</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Style.css?v=3">
+</head>
+<body>
+  <div id="app" class="page-shell">
+    <aside id="menu" class="sidebar">
+      <a id="logo" href="index.html" class="brand">Tunely</a>
+
+      <nav class="nav-links" aria-label="Primary navigation" data-i18n-aria-label="primaryNavigation">
+        <a class="nav-btn active" href="index.html" data-i18n="discover">Home</a>
+        <a class="nav-btn" href="Library.html" data-i18n="library">Library</a>
+        <a class="nav-btn" href="Favorites.html" data-i18n="favorites">Favorites</a>
+      </nav>
+
+      <div class="settings">
+        <button id="settingsToggle" class="settings-toggle" type="button"
+    aria-expanded="false" aria-controls="settingsMenu">
+
+    
+    <img
+      src="Images/setting.png"
+      class="settings-icon"
+      alt=""
+      aria-hidden="true"
+    />
+
+
+    <span data-i18n="settings">Settings</span>
+  </button>
+
+        <section id="settingsMenu" class="settings-menu" aria-labelledby="settingsTitle" hidden>
+          <div class="settings-menu-heading">
+            <h2 id="settingsTitle" data-i18n="settings">Settings</h2>
+          </div>
+          <div class="settings-options" data-settings-view="home">
+            <button class="settings-option" type="button" data-settings-target="language">
+              <span data-i18n="language">Language</span>
+              <span class="settings-option-arrow" aria-hidden="true">›</span>
+            </button>
+            <button class="settings-option" type="button" data-settings-target="theme">
+              <span data-i18n="theme">Theme</span>
+              <span class="settings-option-arrow" aria-hidden="true">›</span>
+            </button>
+          </div>
+          <div class="settings-subview" data-settings-view="language" hidden>
+            <button class="settings-back" type="button" data-settings-home data-i18n="back">Back</button>
+            <p class="settings-label" data-i18n="language">Language</p>
+            <div class="language-options" role="group" aria-label="Language" data-i18n-aria-label="language">
+              <button class="language-option" type="button" data-language="en" aria-pressed="true">English</button>
+              <button class="language-option" type="button" data-language="ar" aria-pressed="false">العربية</button>
+              <button class="language-option" type="button" data-language="bn" aria-pressed="false">বাংলা</button>
+              <button class="language-option" type="button" data-language="zh-CN" aria-pressed="false">中文（简体）</button>
+              <button class="language-option" type="button" data-language="fr" aria-pressed="false">Français</button>
+              <button class="language-option" type="button" data-language="el" aria-pressed="false">Ελληνικά</button>
+              <button class="language-option" type="button" data-language="hi" aria-pressed="false">हिन्दी</button>
+              <button class="language-option" type="button" data-language="pt-PT" aria-pressed="false">Português (Portugal)</button>
+              <button class="language-option" type="button" data-language="ru" aria-pressed="false">Русский</button>
+              <button class="language-option" type="button" data-language="es" aria-pressed="false">Español</button>
+              <button class="language-option" type="button" data-language="tr" aria-pressed="false">Türkçe</button>
+              <button class="language-option" type="button" data-language="ur" aria-pressed="false">اردو</button>
+            </div>
+          </div>
+          <div class="settings-subview" data-settings-view="theme" hidden>
+            <button class="settings-back" type="button" data-settings-home data-i18n="back">Back</button>
+            <p class="settings-label" data-i18n="theme">Theme</p>
+            <div class="theme-options" role="group" aria-label="Theme" data-i18n-aria-label="theme">
+              <button class="theme-option" type="button" data-theme-choice="burgundy" aria-pressed="false" data-i18n="burgundyTheme">Burgundy</button>
+              <button class="theme-option" type="button" data-theme-choice="pink" aria-pressed="false" data-i18n="pinkTheme">Pink</button>
+              <button class="theme-option" type="button" data-theme-choice="purple" aria-pressed="false" data-i18n="purpleTheme">Purple</button>
+              <button class="theme-option" type="button" data-theme-choice="dark" aria-pressed="true" data-i18n="darkTheme">Dark</button>
+              <button class="theme-option" type="button" data-theme-choice="light" aria-pressed="false" data-i18n="lightTheme">Light</button>
+              <button class="theme-option" type="button" data-theme-choice="glacier" aria-pressed="false" data-i18n="glacierTheme">Glacier</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar sticky">
+        <div class="search-box top-search">
+          <span class="search-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10.5" cy="10.5" r="7" stroke="currentColor" stroke-width="1.8" />
+              <path d="M16.75 16.75L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </span>
+          <input id="search" type="search" aria-label="What do you want to play?" placeholder="What do you want to play?" data-i18n-placeholder="searchPlaceholder" data-i18n-aria-label="searchPlaceholder" autocomplete="off">
+          <div id="suggestions" class="suggestions"></div>
+        </div>
+      </header>
+
+      <nav class="filter-chips" aria-label="Content filters">
+        <button class="filter-chip active" type="button" data-content-filter="all" aria-pressed="true" data-i18n="filterAll">All</button>
+        <button class="filter-chip" type="button" data-content-filter="music" aria-pressed="false" data-i18n="filterMusic">Music</button>
+        <button class="filter-chip" type="button" data-content-filter="artists" aria-pressed="false" data-i18n="filterArtists">Artists</button>
+      </nav>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 data-i18n="listenHeading">What do you want to listen to?</h2>
+            <p class="section-description"></p>
+          </div>
+        </div>
+
+        <div id="albumGrid" class="grid" tabindex="0" aria-label="Music collection" data-i18n-aria-label="musicCollection">
+
+          <a class="album-card" href="The-Weeknd.html" data-search="The Weeknd" data-bg="#941815" data-preview="Audios/The Weeknd/Blinding Lights.mp3">
+            <div class="album-art">
+              <img src="Images/the weeknd.jpg" alt="The Weeknd" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>The Weeknd</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+          <a class="album-card" href="Lana-Del-Rey.html" data-search="Lana Del Rey" data-bg="#5c3f8d" data-preview="Audios/Lana Del Rey/Video Games.mp3">
+            <div class="album-art">
+              <img src="Images/lana del rey.jpg" alt="Lana Del Rey" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Lana Del Rey</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+          <a class="album-card" href="Billie Eillish.html" data-search="Billie Eillish" data-bg="#0b6f6f" data-preview="Audios/Billie Eillish/bad guy.mp3">
+            <div class="album-art">
+              <img src="Images/billie eillish.png" alt="Billie Eillish" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Billie Eillish</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+          <a class="album-card" href="Tame Impala.html" data-search="Tame Impala" data-bg="#2f3d4e" data-preview="Audios/Tame Impala/Borderline.mp3">
+            <div class="album-art">
+              <img src="Images/tame impala.jpg" alt="Tame Impala" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Tame Impala</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+          <a class="album-card" href="The-Neighbourhood.html" data-search="The Neighbourhood" data-bg="#2f3d4e" data-preview="Audios/The Neighbourhood/sweater weather.mp3">
+            <div class="album-art">
+              <img src="Images/the neighbourhood.jpg" alt="The Neighbourhood" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>The Neighbourhood</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+          <a class="album-card" href="Talha-Anjum.html" data-search="Talha Anjum" data-bg="#1f5f32" data-preview="Audios/Talha Anjum/Afsanay.mp3">
+            <div class="album-art">
+              <img src="Images/talha anjum.jpg" alt="Talha Anjum" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Talha Anjum</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+          <a class="album-card" href="Chase-Atlantic.html" data-search="Chase Atlantic" data-bg="#18475f" data-preview="Audios/Chase Atlantic/Church.mp3">
+            <div class="album-art">
+              <img src="Images/chase atlantic.jpg" alt="Chase Atlantic" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Chase Atlantic</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+          <a class="album-card" href="Kendrick Lamar.html" data-search="Kendrick Lamar" data-bg="#3b2a1f" data-preview="Audios/Kendrick Lamar/Humble.mp3">
+  <div class="album-art">
+    <img src="Images/kendrick lamar.jpg" alt="Kendrick Lamar" loading="lazy">
+  </div>
+  <div class="album-meta">
+    <b>Kendrick Lamar</b>
+    <span data-i18n="artist">Artist</span>
+  </div>
+</a>
+
+  <a class="album-card" href="Adele.html" data-search="Adele" data-bg="#3b2a1f" data-preview="Audios/Adele/Chasing Pavements.mp3">
+  <div class="album-art">
+    <img src="Images/adele.png" alt="Adele" loading="lazy">
+  </div>
+
+  <div class="album-meta">
+    <b>Adele</b>
+    <span data-i18n="artist">Artist</span>
+  </div>
+</a>
+
+          <a class="album-card" href="Justin Bieber.html" data-search="Justin Bieber" data-bg="#275b77">
+            <div class="album-art">
+              <img src="Images/justin bieber.jpg" alt="Justin Bieber" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>Justin Bieber</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+          <a class="album-card" href="TV Girl.html" data-search="TV Girl" data-bg="#452345" data-preview="Audios/TV Girl/Not Allowed.mp3">
+            <div class="album-art">
+              <img src="Images/tv girl.jpg" alt="TV Girl" loading="lazy">
+            </div>
+            <div class="album-meta">
+              <b>TV Girl</b>
+              <span data-i18n="artist">Artist</span>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="empty-state hidden" data-i18n="emptyState">No matches found. Try another artist or song.</div>
+      </section>
+
+    </main>
+
+    <section id="player" aria-label="Music player">
+      <span><span data-i18n="nowPlaying">Now Playing:</span> <span id="nowPlaying" data-i18n="none">None</span></span>
+      <input type="range" id="progress" min="0" max="100" value="0" aria-label="Track progress" data-i18n-aria-label="trackProgress" disabled>
+      <span id="time">0:00 / 0:00</span>
+
+      <div class="button-group">
+        <button class="control-btn" type="button" aria-label="Previous song" data-i18n-aria-label="previousSong" disabled>
+          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg>
+        </button>
+        <button id="playBtn" type="button" aria-label="Play or pause" data-i18n-aria-label="playPause" disabled>
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="control-btn" type="button" aria-label="Next song" data-i18n-aria-label="nextSong" disabled>
+          <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+        </button>
+        <button id="loopBtn" class="control-btn" type="button" aria-label="Toggle repeat" data-i18n-aria-label="toggleRepeat">
+          <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V6a2 2 0 0 1 2-2h10V1zM7 23l-4-4 4-4v3h10v-4h2v4a2 2 0 0 1-2 2H7v3z"/></svg>
+        </button>
+      </div>
+
+      <div class="controls">
+        <button id="muteBtn" type="button" aria-label="Mute or unmute" data-i18n-aria-label="muteUnmute">🔊</button>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" aria-label="Volume" data-i18n-aria-label="volume">
+        <button id="likeBtn" class="like-btn" type="button" aria-label="Like song" aria-pressed="false" title="Like song">♡</button>
+      </div>
+    </section>
+    <audio id="audio"></audio>
+
+    <div class="page-transition"></div>
+  </div>
+
+  <script src="songCatalog.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>

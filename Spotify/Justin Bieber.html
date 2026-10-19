@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Justin Bieber</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../Style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div id="menu">
+      <a id="logo" href="index.html"><h2>Tunely</h2></a>
+      <div class="search-wrapper">
+        <input type="text" id="search" placeholder="Search songs...">
+        <div id="suggestions" class="suggestions"></div>
+      </div>
+    </div>
+
+    <main id="conteudo">
+      <div id="album-header">
+        <img src="Images/justin bieber.jpg" alt="Justin Bieber">
+        <div>
+          <h1>Justin Bieber</h1>
+          <p>Artist • Playlist</p>
+        </div>
+      </div>
+
+      <div class="song" onclick="playSong(0)"><img src="Audios/Justin Bieber/baby.jpg" class="song-icon" alt="">Baby</div>
+      <div class="song" onclick="playSong(1)"><img src="Audios/Justin Bieber/beauty and a beat.jpg" class="song-icon" alt="">Beauty And A Beat</div>
+      <div class="song" onclick="playSong(2)"><img src="Audios/Justin Bieber/confident.jpg" class="song-icon" alt="">Confident</div>
+      <div class="song" onclick="playSong(3)"><img src="Audios/Justin Bieber/daisies.jpg" class="song-icon" alt="">DAISIES</div>
+      <div class="song" onclick="playSong(4)"><img src="Audios/Justin Bieber/eeinie meenie.jpg" class="song-icon" alt="">Eenie Meenie</div>
+      <div class="song" onclick="playSong(5)"><img src="Audios/Justin Bieber/ghost.jpg" class="song-icon" alt="">Ghost</div>
+      <div class="song" onclick="playSong(6)"><img src="Audios/Justin Bieber/hard to face reality.jpg" class="song-icon" alt="">Hard To Face Reality</div>
+      <div class="song" onclick="playSong(7)"><img src="Audios/Justin Bieber/love yourself.jpg" class="song-icon" alt="">Love Yourself</div>
+      <div class="song" onclick="playSong(8)"><img src="Audios/Justin Bieber/sorry.jpg" class="song-icon" alt="">Sorry</div>
+      <div class="song" onclick="playSong(9)"><img src="Audios/Justin Bieber/stay.jpg" class="song-icon" alt="">STAY</div>
+      <div class="song" onclick="playSong(10)"><img src="Audios/Justin Bieber/youkon.jpg" class="song-icon" alt="">YUKON</div>
+    </main>
+
+    <div id="player">
+      Now Playing: <span id="nowPlaying">None</span>
+      <br><br>
+      <input type="range" id="progress" min="0" max="100" value="0" disabled>
+      <span id="time">0:00 / 0:00</span>
+      <br><br>
+      <div class="button-group">
+        <button class="control-btn" onclick="prevSong()" aria-label="Previous song">
+          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg>
+        </button>
+        <button id="playBtn" onclick="togglePlay()" disabled aria-label="Play or pause">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="control-btn" onclick="nextSong()" aria-label="Next song">
+          <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+        </button>
+        <button id="loopBtn" class="control-btn" onclick="toggleLoop()" aria-label="Toggle repeat">
+          <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V6a2 2 0 0 1 2-2h10V1zM7 23l-4-4 4-4v3h10v-4h2v4a2 2 0 0 1-2 2H7v3z"/></svg>
+        </button>
+      </div>
+      <div class="controls">
+        <button id="muteBtn" onclick="toggleMute()" aria-label="Mute or unmute">🔊</button>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+      </div>
+    </div>
+
+    <audio id="audio"></audio>
+    <div class="page-transition"></div>
+  </div>
+
+  <script src="songCatalog.js"></script>
+  <script src="script.js"></script>
+  <script>
+    const audio = document.getElementById('audio');
+    const nowPlaying = document.getElementById('nowPlaying');
+    const progress = document.getElementById('progress');
+    const volume = document.getElementById('volume');
+    const muteBtn = document.getElementById('muteBtn');
+    const playBtn = document.getElementById('playBtn');
+    const loopBtn = document.getElementById('loopBtn');
+    const timeDisplay = document.getElementById('time');
+    const songs = Array.from(document.getElementsByClassName('song'));
+
+    const names = [
+      'Baby',
+      'Beauty And A Beat',
+      'Confident',
+      'DAISIES',
+      'Eenie Meenie',
+      'Ghost',
+      'Hard To Face Reality',
+      'Love Yourself',
+      'Sorry',
+      'STAY',
+      'YUKON'
+    ];
+
+    const playlist = [
+      'Audios/Justin Bieber/Baby.mp3',
+      'Audios/Justin Bieber/Beauty And A Beat.mp3',
+      'Audios/Justin Bieber/Confident.mp3',
+      'Audios/Justin Bieber/DAISIES.mp3',
+      'Audios/Justin Bieber/Eenie Meenie.mp3',
+      'Audios/Justin Bieber/Ghost.mp3',
+      'Audios/Justin Bieber/hard to face reality.mp3',
+      'Audios/Justin Bieber/Love Yourself.mp3',
+      'Audios/Justin Bieber/Sorry.mp3',
+      'Audios/Justin Bieber/STAY.mp3',
+      'Audios/Justin Bieber/YUKON.mp3'
+    ];
+
+    let currentSong = -1;
+
+    function updateProgressBar() {
+      const value = Number(progress.value) || 0;
+      progress.style.background = `linear-gradient(90deg, #1DB954 ${value}%, #333 ${value}%)`;
+    }
+
+    function playSong(index) {
+      currentSong = index;
+      audio.src = playlist[index];
+      nowPlaying.textContent = names[index];
+      progress.disabled = false;
+      progress.value = 0;
+      updateProgressBar();
+      playBtn.disabled = false;
+      songs.forEach((song, songIndex) => song.classList.toggle('active', songIndex === index));
+
+      audio.play().catch(() => {
+        nowPlaying.textContent = `${names[index]}: audio file unavailable`;
+      });
+    }
+
+    function togglePlay() {
+      if (audio.paused && currentSong < 0) {
+        playSong(0);
+      } else if (audio.paused) {
+        audio.play().catch(() => {
+          nowPlaying.textContent = `${names[currentSong]}: audio file unavailable`;
+        });
+      } else {
+        audio.pause();
+      }
+    }
+
+    function nextSong() {
+      playSong((currentSong + 1) % playlist.length);
+    }
+
+    function prevSong() {
+      playSong((currentSong - 1 + playlist.length) % playlist.length);
+    }
+
+    function toggleLoop() {
+      audio.loop = !audio.loop;
+      loopBtn.classList.toggle('active', audio.loop);
+    }
+
+    function toggleMute() {
+      audio.muted = !audio.muted;
+      muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+    }
+
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+
+      progress.value = (audio.currentTime / audio.duration) * 100;
+      updateProgressBar();
+
+      const formatTime = (time) =>
+        `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
+
+      timeDisplay.textContent =
+        `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+    });
+
+    audio.addEventListener('error', () => {
+      if (currentSong >= 0) {
+        nowPlaying.textContent = `${names[currentSong]}: audio file unavailable`;
+      }
+    });
+
+    audio.addEventListener('play', () => {
+      playBtn.innerHTML =
+        '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+      playBtn.classList.add('playing');
+    });
+
+    audio.addEventListener('pause', () => {
+      playBtn.innerHTML =
+        '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+      playBtn.classList.remove('playing');
+    });
+
+    audio.addEventListener('ended', nextSong);
+
+    volume.addEventListener('input', () => {
+      audio.volume = volume.value;
+    });
+
+    progress.addEventListener('input', () => {
+      if (!audio.duration) return;
+
+      audio.currentTime = (progress.value / 100) * audio.duration;
+      updateProgressBar();
+    });
+  </script>
+</body>
+</html>

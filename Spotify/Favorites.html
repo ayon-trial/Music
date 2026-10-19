@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Style.css?v=8">
+</head>
+<body>
+  <div id="app" class="page-shell favorites-page">
+    <aside id="menu" class="sidebar">
+      <a id="logo" href="index.html" class="brand">Tunely</a>
+
+      <nav class="nav-links" aria-label="Primary navigation" data-i18n-aria-label="primaryNavigation">
+        <a class="nav-btn" href="index.html" data-i18n="discover">Home</a>
+        <a class="nav-btn" href="Library.html" data-i18n="library">Library</a>
+        <a class="nav-btn active" href="Favorites.html" data-i18n="favorites">Favorites</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <section class="section">
+        <div class="section-header favorites-section-header">
+          <div class="favorites-section-title">
+            <h2 data-i18n="likedSongs">Your liked songs</h2>
+            <p data-i18n="favoritesDescription">All the tracks you keep close, together in one place.</p>
+          </div>
+          <div class="favorites-toolbar">
+            <button id="playFavorites" class="favorites-action primary" type="button" data-i18n="playAll" data-i18n-aria-label="playAll" disabled>Play all</button>
+            <button id="shuffleFavorites" class="favorites-action" type="button" data-i18n="shuffle" data-i18n-aria-label="shuffle" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3h4v4h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H17V3zM3 6h4.5c1.21 0 2.36.48 3.21 1.34l.93.93-1.42 1.42-.93-.93A2.54 2.54 0 0 0 7.5 8H3V6zm18 11v4h-4v-2h.59l-3.3-3.3 1.42-1.42 3.3 3.3V17h2zM3 16h4.5c.68 0 1.32-.27 1.8-.75l6.4-6.4 1.42 1.42-6.4 6.4A4.54 4.54 0 0 1 7.5 18H3v-2z"/></svg>
+              <span data-i18n="shuffle">Shuffle</span>
+            </button>
+            <label class="favorites-sort-label" for="favoritesSort" data-i18n="sortBy">Sort by</label>
+            <select id="favoritesSort" aria-label="Sort favorites" data-i18n-aria-label="sortFavorites">
+              <option value="recent" data-i18n="recentlyAdded">Recently added</option>
+              <option value="title" data-i18n="sortTitle">Title</option>
+              <option value="artist" data-i18n="artist">Artist</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="favoritesGrid" class="grid favorites-grid" tabindex="0" aria-label="Favorite songs" data-i18n-aria-label="likedSongs"></div>
+        <div id="favoritesEmpty" class="empty-state favorites-empty">
+          <span class="favorites-empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M20 35.5V12.8l19-4.3v22.2M20 16.5l19-4.3M14.5 40a6.5 4.5 0 1 0 0-9 6.5 4.5 0 0 0 0 9Zm19-3.3a6.5 4.5 0 1 0 0-9 6.5 4.5 0 0 0 0 9Z"/><path class="favorites-heart-path" d="M24 17.5c-2.2-3.3-7.7-2.5-8.2 1.6-.5 4.1 8.2 9 8.2 9s8.7-4.9 8.2-9c-.5-4.1-6-4.9-8.2-1.6Z"/></svg>
+          </span>
+          <h3 data-i18n="favoritesEmpty">Songs you love will appear here.</h3>
+          <p data-i18n="favoritesEmptyDescription">Start with a song that feels like you.</p>
+          <a class="favorites-explore" href="index.html" data-i18n="exploreMusic">Explore music</a>
+        </div>
+      </section>
+    </main>
+
+    <section id="player" aria-label="Music player">
+      <span class="player-track">
+        <img id="playerArtwork" class="player-artwork" alt="" aria-hidden="true" hidden>
+        <span class="player-track-info"><span data-i18n="nowPlaying">Now Playing:</span> <span id="nowPlaying" data-i18n="none">None</span></span>
+      </span>
+      <input type="range" id="progress" min="0" max="100" value="0" aria-label="Track progress" data-i18n-aria-label="trackProgress" disabled>
+      <span id="time">0:00 / 0:00</span>
+
+      <div class="button-group">
+        <button class="control-btn" type="button" aria-label="Previous song" data-i18n-aria-label="previousSong" data-favorite-previous disabled>
+          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg>
+        </button>
+        <button id="playBtn" type="button" aria-label="Play or pause" data-i18n-aria-label="playPause" disabled>
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="control-btn" type="button" aria-label="Next song" data-i18n-aria-label="nextSong" data-favorite-next disabled>
+          <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+        </button>
+        <button id="loopBtn" class="control-btn" type="button" aria-label="Toggle repeat" data-i18n-aria-label="toggleRepeat">
+          <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V6a2 2 0 0 1 2-2h10V1zM7 23l-4-4 4-4v3h10v-4h2v4a2 2 0 0 1-2 2H7v3z"/></svg>
+        </button>
+      </div>
+
+      <div class="controls">
+        <button id="muteBtn" type="button" aria-label="Mute or unmute" data-i18n-aria-label="muteUnmute">🔊</button>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" aria-label="Volume" data-i18n-aria-label="volume">
+        <button id="likeBtn" class="like-btn" type="button" aria-label="Like song" aria-pressed="false" title="Like song">♡</button>
+      </div>
+    </section>
+    <audio id="audio"></audio>
+  </div>
+
+  <script src="songCatalog.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
